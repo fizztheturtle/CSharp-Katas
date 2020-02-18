@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
 
 namespace Kata
 {
@@ -7,8 +10,8 @@ namespace Kata
     {
 
         public static void Main(string[] args)
-        { 
-         Console.WriteLine(MultipleOf3Or5(200));
+        {
+            
         }
 
         //enter a value and add all products of 3 /& 5 that make up that value 
@@ -55,6 +58,7 @@ namespace Kata
             }
             return reversePhrase;
         }
+
         //Delete the nth occurence of a value from an array
         public static int[] DeleteNth(int[] arr, int x)
         {
@@ -78,5 +82,45 @@ namespace Kata
             return String.Format("{0:X2}{1:X2}{2:X2}", r, g, b);
         }
 
+        public static bool IsPangram(string str)
+        {
+            str = str.ToLower();
+            str= Regex.Replace(str, @"[^a-z]+", String.Empty);
+            HashSet<char> lettersUsed = str.ToHashSet();
+            List<char> lettersUsedList = lettersUsed.ToList();
+            lettersUsedList.Sort();
+            char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToLower().ToCharArray();
+            if (lettersUsedList.SequenceEqual(alpha))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static string ExpandedForm(long num)
+        {
+            var charArray = num.ToString().ToCharArray();
+            var expandedStr = "";
+            for (var i = 0; i < charArray.Length; i++)
+            {
+                var x = charArray[i];
+                
+                if (!x.Equals('0'))
+                {
+                    expandedStr += x;
+                    for (var j = 1; j < charArray.Length - i; j++)
+                    {
+                        expandedStr += "0";
+                    }
+                }
+                // var remainingChar = charArray[i..];
+                var remainingChar =charArray.ToList().GetRange(i, charArray.Length - i).ToArray();
+                if (i < charArray.Length-1&&remainingChar[1]!='0')
+                {
+                    expandedStr += " + ";
+                }
+            }
+            return expandedStr;
+        }
     }
 }

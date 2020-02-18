@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MultiplesOf3Or5\Kata.csproj" />
+    <ProjectReference Include="..\Kata\Kata.csproj" />
   </ItemGroup>
 
 </Project>
