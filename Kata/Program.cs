@@ -46,15 +46,12 @@ namespace Kata
                     char[] wordArr = word.ToCharArray();
                     Array.Reverse(wordArr);
                     reversePhrase += new string(wordArr);
-                    
                 }
                 else
                 {  
                     reversePhrase += word;
                 }
-               
                 count++;
-                
             }
             return reversePhrase;
         }
@@ -82,6 +79,11 @@ namespace Kata
             return String.Format("{0:X2}{1:X2}{2:X2}", r, g, b);
         }
 
+        //A pangram is a sentence that contains every single letter of the alphabet at least once.
+        //For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram,
+        //because it uses the letters A-Z at least once (case is irrelevant).
+        //Given a string, detect whether or not it is a pangram.
+        //Return True if it is, False if not.Ignore numbers and punctuation.
         public static bool IsPangram(string str)
         {
             str = str.ToLower();
@@ -97,6 +99,7 @@ namespace Kata
             return false;
         }
 
+        //Write Number in Expanded Form
         public static string ExpandedForm(long num)
         {
             var charArray = num.ToString().ToCharArray();
@@ -104,7 +107,6 @@ namespace Kata
             for (var i = 0; i < charArray.Length; i++)
             {
                 var x = charArray[i];
-                
                 if (!x.Equals('0'))
                 {
                     expandedStr += x;
@@ -121,6 +123,34 @@ namespace Kata
                 }
             }
             return expandedStr;
+        }
+
+        //Moves the first letter of each word to the end of it,
+        //then adds "ay" to the end of the word.
+        //Leaves punctuation marks untouched.
+        public static string PigIt(string str)
+        {
+            string[] words = str.Split(' ');
+            var newPhrase = "";
+            var regexItem = new Regex("^[a-zA-Z ]*$");
+          
+            for (var i=0; i<words.Length; i++ )
+            {
+                if (regexItem.IsMatch(words[i]))
+                {
+                    var firstLetter=words[i][0];
+                    newPhrase += words[i].Substring(1, words[i].Length - 1) + firstLetter+ "ay";
+                }
+                else
+                {
+                    newPhrase += words[i];
+                }
+                if (i < words.Length-1)
+                {
+                    newPhrase += " ";
+                }
+            }
+            return newPhrase;
         }
     }
 }

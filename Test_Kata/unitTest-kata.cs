@@ -94,6 +94,12 @@ namespace Test_Kata
             Assert.That(Kata.Kata_Class.ExpandedForm(42), Is.EqualTo("40 + 2"));
             Assert.That(Kata.Kata_Class.ExpandedForm(70300), Is.EqualTo("70000 + 300"));
         }
+        [Test]
+        public void Test_PigLatin()
+        {
+            Assert.AreEqual("igPay atinlay siay oolcay", Kata.Kata_Class.PigIt("Pig latin is cool"));
+            Assert.AreEqual("hisTay siay ymay tringsay", Kata.Kata_Class.PigIt("This is my string"));
+        }
 
     }
 }
