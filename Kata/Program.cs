@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 
@@ -152,5 +153,98 @@ namespace Kata
             }
             return newPhrase;
         }
+        //Kadane's Algorithm --max sequence sub array sum
+        public static int MaxSequence(int[] arr)
+        {
+            int[] result = new int[1];
+            int maxSumTillNow = int.MinValue;
+
+           
+            int tempSum = 0;
+
+            foreach (var t in arr)
+            {
+                tempSum += t;
+
+                if (tempSum > maxSumTillNow)
+                {
+                    maxSumTillNow = tempSum;
+                  
+                    result[0] = maxSumTillNow;
+                }
+
+                if (tempSum < 0)
+                {
+                    tempSum = 0;
+                }
+            }
+            return result[0];
+        }
+
+        //After every capital letter within a string add a space 
+        public static string BreakCamelCase(string str)
+        {
+          return string.Join(" ", Regex.Split(str, @"(?<!^)(?=[A-Z])"));
+        }
+        //Decode alphaNum morse code
+        public static string Decode(string morseCode)
+        {
+            var morseCodePhrase = morseCode.Split(" ");
+            var decodedMorsePhrase = "";
+                Dictionary<char, String> morse = new Dictionary<char, String>()
+            {
+                {'A' , ".-"}, {'B' , "-..."}, {'C' , "-.-."}, {'D' , "-.."}, {'E' , "."}, {'F' , "..-."},
+                {'G' , "--."}, {'H' , "...."}, {'I' , ".."}, {'J' , ".---"}, {'K' , "-.-"}, {'L' , ".-.."},
+                {'M' , "--"}, {'N' , "-."}, {'O' , "---"}, {'P' , ".--."}, {'Q' , "--.-"}, {'R' , ".-."},
+                {'S' , "..."}, {'T' , "-"}, {'U' , "..-"}, {'V' , "...-"}, {'W' , ".--"}, {'X' , "-..-"},
+                {'Y' , "-.--"}, {'Z' , "--.."},
+                {'0' , "-----"}, {'1' , ".----"}, {'2' , "..---"}, {'3' , "...--"}, {'4' , "....-"}, {'5' , "....."},
+                {'6' , "-...."}, {'7' , "--..."}, {'8' , "---.."}, {'9' , "----."},
+            };
+
+            foreach (var w in morseCodePhrase)
+            {
+                if (morse.FirstOrDefault(x => x.Value == w).Key == '\0' && !decodedMorsePhrase.EndsWith(" "))
+                {
+                    decodedMorsePhrase += " ";
+                }
+                else if (morse.FirstOrDefault(x => x.Value == w).Key == '\0')
+                {
+                }
+                else
+                {
+                    decodedMorsePhrase += morse.FirstOrDefault(x => x.Value == w).Key;
+                }
+            }
+
+            if (decodedMorsePhrase.StartsWith(' '))
+                decodedMorsePhrase = decodedMorsePhrase.TrimStart(' ');
+            if (decodedMorsePhrase.EndsWith(' '))
+                decodedMorsePhrase = decodedMorsePhrase.TrimEnd(' ');
+            return decodedMorsePhrase;
+        }
+
+        public static string Rot13(string input)
+        {
+            var result = "";
+
+            Regex regex = new Regex("[A-Za-z]");
+            foreach (var c in input)
+            {
+                if (regex.IsMatch(c.ToString()))
+                {
+                    int charCode = ((c & 223) - 52) % 26 + (c & 32) + 65;
+                    result += (char)charCode;
+                }
+                else
+                {
+                    result += (char)c;
+                }
+            }
+            return result;
+        }
+
+
     }
+
 }
